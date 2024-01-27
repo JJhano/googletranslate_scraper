@@ -1,0 +1,56 @@
+#separator:tab
+#html:true
+Mindset	Mentalidad
+Mentalidad	Mindset
+Until	Hasta
+Hasta	Until
+Forward	Adelante, hacia adelante, futuro
+Adelante, hacia adelante, futuro	Forward
+Knowledge	Conocimiento
+Conocimiento	Knowledge
+unprecedented	sin precedentes
+sin precedentes	unprecedented
+Sharp	agudo, afilado
+agudo, afilado	Sharp
+seamlessly	Sin problemas, a la perfección
+Sin problemas, a la perfección	seamlessly
+Mortgage	Hipoteca
+Hipoteca	Mortgage
+Depth	Profundidad, fondo, detalle
+Profundidad, fondo, detalle	Depth
+Holistically	Holísticamente, integralmente
+Holísticamente, integralmente	Holistically
+Throughout	En todo, durante todo, de principio a fin
+En todo, durante todo, de principio a fin	Throughout
+Through	A través de, mediante, por
+A través de, mediante, por	Through
+Leverage<br>[sound:Leverage.mp3]	Aprovechar, potenciar, apalancar
+Aprovechar, potenciar, apalancar	Leverage<br>[sound:Leverage.mp3]
+Gap	Brecha
+Brecha	Gap
+Bill	Billete
+Billete	Bill
+Also	También
+También	Also
+Anyway	De cualquier forma, en cualquier caso
+De cualquier forma, en cualquier caso	Anyway
+Indeed	En efecto, de hecho, efectivamente 
+En efecto, de hecho, efectivamente 	Indeed
+Lie down	Tumbarse, recostarse
+Tumbarse, recostarse	Lie down
+What a shame	Que pena
+Que pena	What a shame
+That's a shame	Es una pena
+Es una pena	That's a shame
+Lend	Prestar
+Prestar	Lend
+Climb	Escalar
+Escalar	Climb
+Bookcase	Estantería
+Estantería	Bookcase
+Enough 	Suficiente
+Suficiente	Enough 
+Make sure	Asegúrate
+Asegúrate	Make sure
+Be careful	Ten cuidado
+Ten cuidado	Be careful
