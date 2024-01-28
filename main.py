@@ -14,6 +14,7 @@ def printWarning(message):
     print(f'{message}')
     print('=' * len(message))
 
+#Get audio from google translate tst
 def getAudio(url, filename):
     if(os.path.exists(filename)):
         printWarning(f'File {filename} already exists')
@@ -32,10 +33,12 @@ def getAudio(url, filename):
     except Exception as e:
         print(f'[-] ERROR: {e}')
 
+# gest extension from the route of a file
 def getExtension(filename):
     _, extension = os.path.splitext(filename)
     return extension
-#Get the words from txt file with only words
+
+#Get only the words from txt file
 def getWordsFromFile(file_path):
     try:
         with open(file_path, 'r') as file:
@@ -50,7 +53,8 @@ def getWordsFromFile(file_path):
     except Exception as e:
         print(f"ERROR: {e}")
         exit()
-# ankideck .txt to array format
+
+# Function to transform ankideck.txt to array format, also gets lines from txt file
 def transformFile(file_path):
     try:
         array = []
@@ -68,7 +72,7 @@ def transformFile(file_path):
     except Exception as e:
         print(f"ERROR: {e}")
 
-
+# Function to create a new file 
 def createTxtFile(array, nombre_archivo, salto_linea='\n'):
     try:
         with open(nombre_archivo, 'w') as archivo:
@@ -78,6 +82,7 @@ def createTxtFile(array, nombre_archivo, salto_linea='\n'):
     except Exception as e:
         print(f'Ocurrió un error al crear el archivo: {e}')
 
+# Function to find the substring-word in a string
 def findSubstring(string, substring):
     i = 0
     while (i < len(string)):
@@ -99,6 +104,7 @@ def findSubstring(string, substring):
 #     else:
 #         return -1
 
+#Fuction to add string to the anki txt file 
 def addAudioToAnkiTxt(lines, words, ext):
     num = len(words)
     cont = 0
@@ -116,7 +122,7 @@ def addAudioToAnkiTxt(lines, words, ext):
             array.append(line)
         cont = 0
     return array
-
+#Function to move the audio files to the anki collection location
 def moveToCollection(directory_collection, files):
     print(f'Colection directory %s', directory_collection)
     print(f'Files %s', files)
@@ -134,7 +140,6 @@ def moveToCollection(directory_collection, files):
     else:
         print(f'[-] Error files {error_count}')
 
-    
 def main():
     load_dotenv('.env')
     URL = os.environ.get('TRANSLATE_URL')
