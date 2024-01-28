@@ -78,14 +78,27 @@ def createTxtFile(array, nombre_archivo, salto_linea='\n'):
     except Exception as e:
         print(f'Ocurrió un error al crear el archivo: {e}')
 
-def endPosSubstring(cadena, substring):
-    indice = cadena.find(substring)
-    if indice != -1:
-        end_pos = indice + len(substring) - 1
-        return end_pos
-    else:
-        return -1
-    
+def findSubstring(string, substring):
+    i = 0
+    while (i < len(string)):
+        j = 0
+        while(j < len(substring) and string[i] == substring[j]):
+            j += 1
+            i += 1
+        if(j == len(substring)):
+            if(i >= len(string)) or (i < len(string) and string[i] == ' ' or string[i] == '\n' or string[i] == None or string[i] == '\t'):
+                return i - 1
+        i += 1
+    return -1
+
+# def endPosSubstring(cadena, substring):
+#     indice = cadena.find(substring)
+#     if indice != -1:
+#         end_pos = indice + len(substring) - 1
+#         return end_pos
+#     else:
+#         return -1
+
 def addAudioToAnkiTxt(lines, words, ext):
     num = len(words)
     cont = 0
@@ -95,7 +108,7 @@ def addAudioToAnkiTxt(lines, words, ext):
             while (cont < num and not line.__contains__(words[cont])):
                 cont += 1
             if (cont < num):
-                pos = endPosSubstring(line, words[cont])
+                pos = findSubstring(line, words[cont])
                 subs = line[:pos + 1] + html_to_add + words[cont].lower() + ext + ']'
                 subs += line[pos + 1: len(line) + 1]
                 array.append(subs)
@@ -107,14 +120,20 @@ def addAudioToAnkiTxt(lines, words, ext):
 def moveToCollection(directory_collection, files):
     print(f'Colection directory %s', directory_collection)
     print(f'Files %s', files)
+    error_count = 0
     for file in files:
         try:
             shutil.move(file, directory_collection)
             print(f'File {file} moved' )
         except Exception as e:
+            error_count += 1
             print(f'ERROR: {file}')
             print(e)
-    print(f'[+] Files moved')
+    if(error_count == 0):
+        print(f'[+] Files moved')
+    else:
+        print(f'[-] Error files {error_count}')
+
     
 def main():
     load_dotenv('.env')
@@ -143,10 +162,7 @@ def main():
     else:
         using_file = True
     array, lines = transformFile("English words.txt")
-    # # print(endPosSubstring("hola co ", "co"))
-    # exit()
     createTxtFile(array, "words.txt", '\n')
-    # exit()
     workdir = os.getcwd()
     print(f'Working directory: {workdir}')
     if not os.path.exists(DIR):
@@ -169,7 +185,7 @@ def main():
     createTxtFile(lines, "new english words.txt", '')
     files =  os.listdir(DIR)
     os.chdir(DIR)
-    moveToCollection(ANKI_COLLECTION_DIRECTORY,files)
+    # moveToCollection(ANKI_COLLECTION_DIRECTORY,files)
     print('[+] Done')
 
 if __name__ == '__main__':
