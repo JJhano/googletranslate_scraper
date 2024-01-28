@@ -34,8 +34,8 @@ Also	También
 También	Also
 Anyway	De cualquier forma, en cualquier caso
 De cualquier forma, en cualquier caso	Anyway
-Indeed	En efecto, de hecho, efectivamente 
-En efecto, de hecho, efectivamente 	Indeed
+Indeed	En efecto, de hecho, efectivamente
+En efecto, de hecho, efectivamente	Indeed
 Lie down	Tumbarse, recostarse
 Tumbarse, recostarse	Lie down
 What a shame	Que pena
@@ -48,8 +48,8 @@ Climb	Escalar
 Escalar	Climb
 Bookcase	Estantería
 Estantería	Bookcase
-Enough 	Suficiente
-Suficiente	Enough 
+Enough	Suficiente
+Suficiente	Enough
 Make sure	Asegúrate
 Asegúrate	Make sure
 Be careful	Ten cuidado

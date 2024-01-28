@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 
 example_html_to_add = "<br>[sound:Leverage.mp3]"
 BR = "<br>"
-
+html_to_add = '<br>[sound:'
 def printWarning(message):
     message = f'WARNING: {message}'
     print('=' * len(message))
@@ -15,7 +15,7 @@ def printWarning(message):
 def getAudio(url, filename):
     if(os.path.exists(filename)):
         printWarning(f'File {filename} already exists')
-        exit()
+        # exit()
     try:
         print(f'Request HTTP: {url}')
         response = req.get(url)
@@ -37,10 +37,9 @@ def getWordsFromFile(file_path):
     try:
         with open(file_path, 'r') as file:
             lines = file.readlines()
-
-            words = [word.strip() for line in lines for word in line.split()]
-
-            return words
+            words = [line.replace('\n','') for line in lines]
+            # print(words)
+        return words
 
     except FileNotFoundError:
         print(f"ERROR: File' {file_path}' not found")
@@ -59,7 +58,7 @@ def transformFile(file_path):
                 word, _ = lines[i].split('\t')
                 if not word.__contains__(BR):
                     array.append(word)
-            return array
+        return array
 
     except FileNotFoundError:
         print(f"ERROR: File' {file_path}' not found")
@@ -88,17 +87,24 @@ def endPosSubstring(cadena, substring):
         return -1
     
 def addAudioToAnkiTxt(file_path, words):
+    global EXT
     try:
         num = len(words)
         cont = 0
         with open(file_path, 'wr') as file:
             lines = file.readlines()
+            array = []
             for line in lines:
                 if(not line.__contains__(BR)):
                     while (cont < num and not line.__contains__(words[cont])):
                         cont += 1
-                    
-                cont = 0
+                    if (cont < num):
+                        pos = endPosSubstring(line, words[cont])
+                        subs = line[:pos + 1] + html_to_add + words[cont] + EXT + ']'
+                        subs += line[pos + 1: len(line) + 1]
+                        array.append(subs)
+            cont = 0
+        print(array)
 
     except FileNotFoundError:
         print(f"ERROR: File' {file_path}' not found")
@@ -107,8 +113,6 @@ def addAudioToAnkiTxt(file_path, words):
         print(f"ERROR: {e}")
         exit()
 
-
-    
 def main():
 
     load_dotenv('.env')
@@ -152,7 +156,8 @@ def main():
             for word in words:
                 word = word.lower()
                 getAudio(f'{URL}{word}', f'{DIR}/{word}{EXT}')
-                
+            # addAudioToAnkiTxt('Exglish words.txt', words)
+            
         else:
             word = word.lower()
             getAudio(f'{URL}{word}', f'{DIR}/{word}{EXT}')
