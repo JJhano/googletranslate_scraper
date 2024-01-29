@@ -15,6 +15,7 @@ def printWarning(message):
     print(f'{message}')
     print('=' * len(message))
 
+#Get audio from google translate tst
 def getAudio(url, filename):
     if(os.path.exists(filename)):
         printWarning(f'File {filename} already exists')
@@ -33,10 +34,12 @@ def getAudio(url, filename):
     except Exception as e:
         print(f'[-] ERROR: {e}')
 
+# gest extension from the route of a file
 def getExtension(filename):
     _, extension = os.path.splitext(filename)
     return extension
-#Get the words from txt file with only words
+
+#Get only the words from txt file
 def getWordsFromFile(file_path):
     try:
         with open(file_path, 'r') as file:
@@ -51,7 +54,8 @@ def getWordsFromFile(file_path):
     except Exception as e:
         print(f"ERROR: {e}")
         exit()
-# ankideck .txt to array format
+
+# Function to transform ankideck.txt to array format, also gets lines from txt file
 def transformFile(file_path):
     try:
         array = []
@@ -69,7 +73,7 @@ def transformFile(file_path):
     except Exception as e:
         print(f"ERROR: {e}")
 
-
+# Function to create a new file 
 def createTxtFile(array, nombre_archivo, salto_linea='\n'):
     try:
         with open(nombre_archivo, 'w') as archivo:
@@ -79,14 +83,29 @@ def createTxtFile(array, nombre_archivo, salto_linea='\n'):
     except Exception as e:
         print(f'Ocurrió un error al crear el archivo: {e}')
 
-def endPosSubstring(cadena, substring):
-    indice = cadena.find(substring)
-    if indice != -1:
-        end_pos = indice + len(substring) - 1
-        return end_pos
-    else:
-        return -1
-    
+# Function to find the substring-word in a string
+def findSubstring(string, substring):
+    i = 0
+    while (i < len(string)):
+        j = 0
+        while(j < len(substring) and string[i] == substring[j]):
+            j += 1
+            i += 1
+        if(j == len(substring)):
+            if(i >= len(string)) or (i < len(string) and string[i] == ' ' or string[i] == '\n' or string[i] == None or string[i] == '\t'):
+                return i - 1
+        i += 1
+    return -1
+
+# def endPosSubstring(cadena, substring):
+#     indice = cadena.find(substring)
+#     if indice != -1:
+#         end_pos = indice + len(substring) - 1
+#         return end_pos
+#     else:
+#         return -1
+
+#Fuction to add string to the anki txt file 
 def addAudioToAnkiTxt(lines, words, ext):
     num = len(words)
     cont = 0
@@ -96,7 +115,7 @@ def addAudioToAnkiTxt(lines, words, ext):
             while (cont < num and not line.__contains__(words[cont])):
                 cont += 1
             if (cont < num):
-                pos = endPosSubstring(line, words[cont])
+                pos = findSubstring(line, words[cont])
                 subs = line[:pos + 1] + html_to_add + words[cont].lower() + ext + ']'
                 subs += line[pos + 1: len(line) + 1]
                 array.append(subs)
@@ -104,17 +123,20 @@ def addAudioToAnkiTxt(lines, words, ext):
             array.append(line)
         cont = 0
     return array
-
+#Function to move the audio files to the anki collection location
 def moveToCollection(directory_collection, files):
     print(f'Colection directory %s', directory_collection)
     print(f'Files %s', files)
+    error_count = 0
     for file in files:
         try:
             shutil.move(file, directory_collection)
             print(f'File {file} moved' )
         except Exception as e:
+            error_count += 1
             print(f'ERROR: {file}')
             print(e)
+<<<<<<< HEAD
     print(f'[+] Files moved')
 
 def getWordsFromCSV(path):
@@ -129,6 +151,12 @@ def getWordsFromCSV(path):
         print(df)
     except Exception as e:
         print(f'ERROR: {e}') 
+=======
+    if(error_count == 0):
+        print(f'[+] Files moved')
+    else:
+        print(f'[-] Error files {error_count}')
+>>>>>>> 06307c88e49f1500ba2a49804967b7e88ae7aed0
 
 def main():
     # getWordsFromCSV("data.csv")
@@ -159,10 +187,7 @@ def main():
     else:
         using_file = True
     array, lines = transformFile("English words.txt")
-    # # print(endPosSubstring("hola co ", "co"))
-    # exit()
     createTxtFile(array, "words.txt", '\n')
-    # exit()
     workdir = os.getcwd()
     print(f'Working directory: {workdir}')
     if not os.path.exists(DIR):
@@ -185,7 +210,7 @@ def main():
     createTxtFile(lines, "new english words.txt", '')
     files =  os.listdir(DIR)
     os.chdir(DIR)
-    moveToCollection(ANKI_COLLECTION_DIRECTORY,files)
+    # moveToCollection(ANKI_COLLECTION_DIRECTORY,files)
     print('[+] Done')
 
 if __name__ == '__main__':
