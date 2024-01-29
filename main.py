@@ -133,11 +133,11 @@ def moveToCollection(directory_collection, files):
             shutil.move(file, directory_collection)
             print(f'File {file} moved' )
         except Exception as e:
-            error_count += 1
-            print(f'ERROR: {file}')
-            print(e)
-<<<<<<< HEAD
-    print(f'[+] Files moved')
+            print(f'ERROR: {e}') 
+    if(error_count == 0):
+        print(f'[+] Files moved')
+    else:
+        print(f'[-] Error files {error_count}')
 
 def getWordsFromCSV(path):
     try:
@@ -150,13 +150,7 @@ def getWordsFromCSV(path):
 
         print(df)
     except Exception as e:
-        print(f'ERROR: {e}') 
-=======
-    if(error_count == 0):
-        print(f'[+] Files moved')
-    else:
-        print(f'[-] Error files {error_count}')
->>>>>>> 06307c88e49f1500ba2a49804967b7e88ae7aed0
+        print("Error", e)
 
 def main():
     # getWordsFromCSV("data.csv")
