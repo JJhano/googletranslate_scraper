@@ -3,6 +3,7 @@ import os
 import sys
 from dotenv import load_dotenv
 import shutil 
+import pandas as pd
 
 example_html_to_add = "<br>[sound:Leverage.mp3]"
 BR = "<br>"
@@ -115,8 +116,23 @@ def moveToCollection(directory_collection, files):
             print(f'ERROR: {file}')
             print(e)
     print(f'[+] Files moved')
-    
+
+def getWordsFromCSV(path):
+    try:
+        df = pd.read_csv(path, delimiter=';')
+        # print(df["Infinitivo"].values.tolist())
+        df["Infinitivo"] = df["Infinitivo"].apply(lambda x: x + html_to_add + x + ".mp3" + "]")
+        # print(df["Infinitivo"].values.tolist())
+        df["Pasado simple"] = df["Pasado simple"].apply(lambda x: x + html_to_add + x + ".mp3" + "]")
+        df["Participio pasado"] = df["Participio pasado"].apply(lambda x: x + html_to_add + x + ".mp3" + "]")
+
+        print(df)
+    except Exception as e:
+        print(f'ERROR: {e}') 
+
 def main():
+    # getWordsFromCSV("data.csv")
+    # exit()
     load_dotenv('.env')
     URL = os.environ.get('TRANSLATE_URL')
     DIR = os.environ.get('DIR')
